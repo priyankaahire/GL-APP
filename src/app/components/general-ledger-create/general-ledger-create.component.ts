@@ -17,7 +17,7 @@ interface ReconFequency {
   styleUrl: './general-ledger-create.component.scss'
 })
 export class GeneralLedgerCreateComponent implements OnInit {
-  frqOption: string;
+  frqOption!: string;
   frqOptions: ReconFequency[] = [
     { id: 'option1', value: 'Option 1' },
     { id: 'option2', value: 'Option 2' },
@@ -26,7 +26,7 @@ export class GeneralLedgerCreateComponent implements OnInit {
 
   form:FormGroup;
   constructor(private fb: FormBuilder) {
-    this.frqOption = ''
+    
     this.form = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]    })

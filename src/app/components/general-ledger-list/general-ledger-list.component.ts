@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
@@ -8,6 +8,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { GeneralLedgerCreateComponent } from '../general-ledger-create/general-ledger-create.component';
 import { ApiService } from '../../shared/api.service';
+import { BreadcrumbService } from '../../shared/bredcrumb.servcie'
+import { Router } from '@angular/router';
 
 export interface ReconData {
   reconId: number;
@@ -39,7 +41,8 @@ export class GeneralLedgerListComponent implements OnInit, AfterViewInit{
   ];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private dialog: MatDialog, private _apiService: ApiService) {
+  constructor(private dialog: MatDialog, private _apiService: ApiService, 
+    private _breadcrumbService: BreadcrumbService, private _router: Router) {
     this.dataSource = new MatTableDataSource<ReconData>([]);
 
   }
@@ -65,15 +68,12 @@ export class GeneralLedgerListComponent implements OnInit, AfterViewInit{
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  openDialog() {
-    const dialogRef = this.dialog.open(GeneralLedgerCreateComponent, {
-      width: '800px',
-      position: { top: '1%', left: '25%' },
-      panelClass: 'my-centered-dialog',
-    });
-   
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+  createRecon() {
+    this._breadcrumbService.setBreadcrumbs([
+      { label: 'Home', route: '/recon' },
+      { label: 'Create Recon', route: '/create-recon' }
+    ]);
+    // Navigate to the create recon page
+    this._router.navigate(['/create-recon']);
   }
 }
