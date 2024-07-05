@@ -1,0 +1,28 @@
+<!-- home.component.html -->
+
+<div class="container">
+    <!-- Search Input -->
+    <input type="text" (input)="applyFilter($event)" placeholder="Search..." class="search-input">
+  
+    <!-- Mat Table -->
+    <table mat-table [dataSource]="dataSource" matSort class="mat-table">
+  
+      <!-- Columns -->
+      <ng-container *ngFor="let col of displayedColumns" [matColumnDef]="col">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ col | titlecase }} </th>
+        <td mat-cell *matCellDef="let element"> {{ element[col] }} </td>
+      </ng-container>
+  
+      <!-- Rows -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+    </table>
+  
+    <!-- Pagination -->
+    <mat-paginator [pageSizeOptions]="[10, 20, 50]" class="mat-paginator"></mat-paginator>
+  
+    <!-- Create Recon Button -->
+    <button mat-raised-button color="primary" routerLink="/create-recon" class="create-button"> Create Recon </button>
+  </div>
+  
